@@ -216,6 +216,8 @@ cat "spaces in this filename"
 
 From this command we have captured our flag for this level and obtained the password.
 
+![bandit2-1.png](https://github.com/EoinReid/Bandit-OverTheWire/blob/main/bandit-screenshots/bandit2-1.png)
+
 ### Flag
 
 ```bash
