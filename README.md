@@ -263,28 +263,36 @@ specify it is a file of one name with spaces in the name.
 
 ### Walkthrough
 
-`ls`
+```bash
+ls
+```
 
 From the ls command we can see there is another directory 
 called "inhere", this is the directory the level goal specified so we 
 are going to change to that directory.
 
-`cd inhere`
+```bash
+cd inhere
+```
 
 Changing to the inhere directory.
 
-`ls -a`
+```bash
+ls -a
+```
 
 As the level goal descriptor specified a "hidden" file, we
  are going to use the ls command in this directory with the -a attribute
  so that it lists all contents in this directory even hidden files.
-
-`cat .hidden`
-
+ 
+```bash
+cat .hidden
+```
 From the ls -a command we found a hidden file called 
 .hidden, so we are going to use the cat command to print its contents to
  the terminal.
 
+![bandit3-1.png](https://github.com/EoinReid/Bandit-OverTheWire/blob/main/bandit-screenshots/bandit3-1.png)
 ### Flag
 
 ```
@@ -349,6 +357,8 @@ files are all of the same type, so the quickest way to see the contents
 of all the files at once is using the cat command with ./* which will 
 print all the contents of all the files in this directory to the 
 terminal instead of having to cat each file manually.
+
+![bandit4-1.png](https://github.com/EoinReid/Bandit-OverTheWire/blob/main/bandit-screenshots/bandit4-1.png)
 
 ### Flag
 
@@ -421,6 +431,8 @@ cat ./maybehere07/.file2
 From the find command the terminal returned the file and 
 location "./maybehere07/.file2", so I then used the cat command to print
  its contents to the terminal.
+ 
+ ![bandit5-1.png](https://github.com/EoinReid/Bandit-OverTheWire/blob/main/bandit-screenshots/bandit5-1.png)
 
 ### Flag
 
