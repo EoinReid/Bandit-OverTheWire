@@ -64,11 +64,11 @@ ssh -p 2220 bandit0@bandit.labs.overthewire.org
 
 After running the command we will be prompted to enter a password to continue to the level, this password is bandit0 as stated in the level goal above.
 
-![bandit0-1.PNG](Level%200%201b1f9a2af4174a91a17a4cc2b2338efd/bandit0-1.png)
+![bandit0-2.PNG](https://github.com/EoinReid/Bandit-OverTheWire/blob/main/bandit-screenshots/bandit0-2.png)
 
 ### Flag
 
-There isn’t a “flag” perse for this level as the goal was to successfully connect to the game server.
+There isn’t a “flag” perse for this level as the goal was to successfully connect to the game server via SSH.
 
 ### Commands breakdown
 
@@ -117,22 +117,17 @@ ssh -p 2220 bandit1@bandit.labs.overthewire.org
 Then when asked for the password, enter the flag from the previous level.
 
 
-
 ### Walkthrough
 
 We are told in the level goal descriptor that the password for the next level is stored in a file called readme in the home directory. So first we need to check if we are in the home directory. We do this using the `pwd` command.
 
-[https://www.notion.so](https://www.notion.so)
-
 After the `pwd` command confirms we are in the home directory we need to list the contents of the directory to see what's there we do this using the `ls` command.
-
-[https://www.notion.so](https://www.notion.so)
 
 From the `ls` command we can see there is a file called "readme" in the home directory, so we are going to use the `cat` command to see the contents of this file.
 
-[https://www.notion.so](https://www.notion.so)
-
 We have now captured our flag for this level and obtained the password.
+
+![bandit1-3.png](https://github.com/EoinReid/Bandit-OverTheWire/blob/main/bandit-screenshots/bandit1-2.png)
 
 ### Flag
 
