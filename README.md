@@ -2,46 +2,13 @@
 OverTheWire Bandit is a linux based Capture the Flag wargame designed for beginners to dive into the world of Linux, Networking, Cybersecurity and Capture the flag wargames. This is where I will publish my walkthroughs and progress through the Bandit Capture The Flag.
 
 # Levels
-- [Bandit-CTF](#bandit-ctf)
-- [Levels](#levels)
 - [Level 0](#level-0)
-    + [Level Goal](#level-goal)
-    + [Walkthrough](#walkthrough)
-    + [Flag](#flag)
-    + [Commands breakdown](#commands-breakdown)
 - [Level 0 → Level 1](#level-0--level-1)
-    + [Level Goal](#level-goal-1)
-    + [Walkthrough](#walkthrough-1)
-    + [Flag](#flag-1)
-    + [Commands breakdown](#commands-breakdown-1)
 - [Level 1 → Level 2](#level-1--level-2)
-    + [Level Goal](#level-goal-2)
-    + [Walkthrough](#walkthrough-2)
-    + [Flag](#flag-2)
-    + [New Commands breakdown](#new-commands-breakdown)
 - [Level 2 → Level 3](#level-2--level-3)
-    + [Level Goal](#level-goal-3)
-    + [Walkthrough](#walkthrough-3)
-    + [Flag](#flag-3)
-    + [New Commands breakdown](#new-commands-breakdown-1)
 - [Level 3 → Level 4](#level-3--level-4)
-    + [Level Goal](#level-goal-4)
-    + [Walkthrough](#walkthrough-4)
-    + [Flag](#flag-4)
-    + [Commands breakdown](#commands-breakdown-2)
 - [Level 4 → Level 5](#level-4--level-5)
-    + [Level Goal](#level-goal-5)
-    + [Walkthrough](#walkthrough-5)
-    + [Flag](#flag-5)
-    + [New Commands breakdown](#new-commands-breakdown-2)
 - [Level 5 → Level 6](#level-5--level-6)
-    + [Level Goal](#level-goal-6)
-    + [Walkthrough](#walkthrough-6)
-    + [Flag](#flag-6)
-    + [Commands breakdown](#commands-breakdown-3)
-
-
-
 
 # Level 0
 
