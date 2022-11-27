@@ -94,7 +94,7 @@ From the `ls` command we can see there is a file called "readme" in the home dir
 
 We have now captured our flag for this level and obtained the password.
 
-![bandit1-3.png](https://github.com/EoinReid/Bandit-OverTheWire/blob/main/bandit-screenshots/bandit1-2.png)
+![bandit0-01.png](https://github.com/EoinReid/Bandit-OverTheWire/blob/main/bandit-screenshots/bandit0-01.png)
 
 ### Flag
 
@@ -160,6 +160,8 @@ cat ./-
 ```
 
 From this command we have captured our flag for this level and obtained the password.
+
+![bandit1-2.PNG](https://github.com/EoinReid/Bandit-OverTheWire/blob/main/bandit-screenshots/bandit1-2.png)
 
 ### Flag
 
