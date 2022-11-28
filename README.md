@@ -10,6 +10,8 @@ OverTheWire Bandit is a linux based Capture the Flag wargame designed for beginn
 - [Level 4 → Level 5](#level-4--level-5)
 - [Level 5 → Level 6](#level-5--level-6)
 - [Level 6 → Level 7](#level-6---level-7)
+- [Level 7 → Level 8](#level-7---level-8)
+- [Level 8 → Level 9](#level-8---level-9)
 
 # Level 0
 
@@ -515,4 +517,45 @@ the "/" specifies that we want to start our search from the root folder (As oppo
 "-user bandit7 -size33c -group bandit6" specifies that we want to search for a file that is owned by a user bandit7, is a size of 33 bytes, and is owned by a group bandit6.
 
 "2>/dev/null" was used to remove all those errors from the output so we could clear out the garbage and get to just the good stuff, such as our flag. But how does this work? The > opperator is used to redirect standard output, we can add a 2 in front like "2>" to redirect stderr or simply errors from the output of our command. Now we need somewhere to redirect that output to. /dev/null is the null device it takes any input you want and throws it away. It can be used to suppress any output.
+
+
+# Level 7  → Level 8
+
+### Level Goal
+
+> The password for the next level is stored in the file data.txt next to the word millionth
+
+
+### Walkthrough
+
+For this level we know the password is in a file called data.txt, and that it is next to the word millionth. This means we just need to search data.txt for the word millionth using grep.
+
+```bash
+cat data.txt | grep "millionth"
+```
+
+And we get our flag!
+
+![bandit7-1.PNG](https://github.com/EoinReid/Bandit-OverTheWire/blob/main/bandit-screenshots/bandit7-1.png)
+
+
+### Flag
+
+```
+TESKZC0XvTetK0S9xNwm25STk5iWrBvP
+
+```
+
+### Commands breakdown
+
+
+```bash
+cat data.txt | grep "millionth"
+```
+
+For this command we used a concept we havent covered before in this CTF called "piping" denoted by the "|" symbol. Piping lets you take the output of one command (in this case cat data.txt) and use that output as the input for our next command, which is "grep".
+
+grep lets us search files for a particular expression, such as "millionth".
+
+So in summary, this command lets us read the contents of data.txt, and then search those contents for the word "millionth" so we can find our flag as the level goal explain it was beside this word in the file.
 
