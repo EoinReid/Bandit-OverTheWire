@@ -649,3 +649,9 @@ G7w8LIi6J3kTb8A7j9LgrywtEUlyyp6s
 
 ### Commands breakdown
 
+```bash
+strings data.txt | grep "="
+```
+
+The string command lets us take any printable (aka human readable) string from a file . We then pipe to grep to search through these human readable stings for any string that begins with an = symbol.
+
