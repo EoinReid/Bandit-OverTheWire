@@ -360,6 +360,12 @@ of all the files at once is using the cat command with ./* which will
 print all the contents of all the files in this directory to the 
 terminal instead of having to cat each file manually.
 
+```bash
+cat ./-file07
+```
+
+Due to the output of printing all of the files together made it difficult to see what part of the output was the flag and what was garbage we are going to have to cat an individual file to see. The flag looks like its one of the last few files so we are going to cat this file and check its output and get the flag.
+
 ![bandit4-1.png](https://github.com/EoinReid/Bandit-OverTheWire/blob/main/bandit-screenshots/bandit4-1.png)
 
 ### Flag
