@@ -610,3 +610,41 @@ EN632PlfYiZbn3PhVK3XOGSlNInNE00t
 sort data.txt | uniq -u
 ```
 So you might be wondering why we had to sort data.txt before using our uniq command. The Uniq command allows you to remove duplicates from a file get the unique values in the file. Unfortunately, uniq does not detect duplicate lines unless they are adjacent to each other in the file. So to work around this we first sort the data.txt file to ensure that all duplicate values will be adjcaent to each other in the file before we use our uniq command to remove them.
+
+# Level 9  → Level 10
+
+### Level Goal
+
+>The password for the next level is stored in the file data.txt in one of the few human-readable strings, preceded by several ‘=’ characters.
+
+### Walkthrough
+
+The level goal tells us our flag is in the file data.txt, that it is a human-readable string in the file, and it has several = symbols before it.
+
+
+```bash
+ls
+```
+
+First we are juts confirming that data.txt is in our current directory.
+
+
+```bash
+strings data.txt | grep "="
+```
+As we know that the flag is a string, and preceed by "=" we are going to first get all the strings from the data.txt file and then pipe to grep to search those strings for an "=" symbol.
+
+And we found our flag!
+
+
+![bandit9-1.PNG](https://github.com/EoinReid/Bandit-OverTheWire/blob/main/bandit-screenshots/bandit9-1.png)
+
+### Flag
+
+```
+G7w8LIi6J3kTb8A7j9LgrywtEUlyyp6s
+
+```
+
+### Commands breakdown
+
