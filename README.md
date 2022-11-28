@@ -528,11 +528,19 @@ the "/" specifies that we want to start our search from the root folder (As oppo
 
 ### Walkthrough
 
-For this level we know the password is in a file called data.txt, and that it is next to the word millionth. This means we just need to search data.txt for the word millionth using grep.
+For this level we know the password is in a file called data.txt, and that it is next to the word millionth. 
+
+```bash
+ls
+```
+
+First we are juts confirming that data.txt is in our current directory.
+
 
 ```bash
 cat data.txt | grep "millionth"
 ```
+Then we just need to search data.txt for the word millionth using grep.
 
 And we get our flag!
 
@@ -559,3 +567,46 @@ grep lets us search files for a particular expression, such as "millionth".
 
 So in summary, this command lets us read the contents of data.txt, and then search those contents for the word "millionth" so we can find our flag as the level goal explain it was beside this word in the file.
 
+# Level 8 → Level 9
+
+### Level Goal
+
+> The password for the next level is stored in the file data.txt and is the only line of text that occurs only once
+> 
+### Walkthrough
+
+So the level goal lets us know our flag is stored in a file called data.txt, and that it is the only line of text that occurs once. Whats another word for something that only occurs once? Unique. So we are going to be using the Uniq command here.
+
+
+```bash
+ls
+```
+
+First we are juts confirming that data.txt is in our current directory.
+
+
+```bash
+sort data.txt | uniq -u
+```
+
+Then we are going to sort data.txt and pipe the output to the uniq command to search for unique values in the file. The reason why we needed to sort this file first will be explained in the command breakdown section.
+
+Now we have our flag!
+
+![bandit8-1.PNG](https://github.com/EoinReid/Bandit-OverTheWire/blob/main/bandit-screenshots/bandit8-1.png)
+
+
+
+### Flag
+
+```
+EN632PlfYiZbn3PhVK3XOGSlNInNE00t
+
+```
+
+### Commands breakdown
+
+```bash
+sort data.txt | uniq -u
+```
+So you might be wondering why we had to sort data.txt before using our uniq command. The Uniq command allows you to remove duplicates from a file get the unique values in the file. Unfortunately, uniq does not detect duplicate lines unless they are adjacent to each other in the file. So to work around this we first sort the data.txt file to ensure that all duplicate values will be adjcaent to each other in the file before we use our uniq command to remove them.
