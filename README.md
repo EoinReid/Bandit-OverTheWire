@@ -483,7 +483,7 @@ find / -user bandit7 -size 33c -group bandit6
 ```
 The level goal states that the password is stored "somewhere on the server" this indicates that we are going to need to search not just our current directory but search from the root diretory (/) so we can the entire server for the flag. The level goal also gives us a few more hints about the files attributes that we can add to our command to narrow our search, such as the user owner of the file is bandit7, the size of the file is 33 bytes and the group owner of the file is bandit6.
 
-![bandit0-2.PNG](https://github.com/EoinReid/Bandit-OverTheWire/blob/main/bandit-screenshots/bandit0-2.png)
+![bandit6-1.PNG](https://github.com/EoinReid/Bandit-OverTheWire/blob/main/bandit-screenshots/bandit6-1.png)
 
 After running this command we can see that the output isn't as clean as we would like, and there seem to be alot of garbage files that also match the same attributes as our flag. However all of these files seem to be returning an error of sorts, such as "permission denied" or "no such file or directory". Lucky for us we can add a little bit to our command and strip all these errors from the output.
 
@@ -491,7 +491,7 @@ After running this command we can see that the output isn't as clean as we would
 find / -user bandit7 -size 33c -group bandit6 2>/dev/null
 ```
 
-![bandit0-2.PNG](https://github.com/EoinReid/Bandit-OverTheWire/blob/main/bandit-screenshots/bandit0-2.png)
+![bandit6-2.PNG](https://github.com/EoinReid/Bandit-OverTheWire/blob/main/bandit-screenshots/bandit6-2.png)
 
 That's more like it! And now we can use the cat command to read the outputs of this file and get our flag!
 
