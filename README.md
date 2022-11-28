@@ -9,6 +9,7 @@ OverTheWire Bandit is a linux based Capture the Flag wargame designed for beginn
 - [Level 3 → Level 4](#level-3--level-4)
 - [Level 4 → Level 5](#level-4--level-5)
 - [Level 5 → Level 6](#level-5--level-6)
+- [Level 6 → Level 7](#level-6--level-7)
 
 # Level 0
 
@@ -464,3 +465,54 @@ that you don't know the location of. In the find command we used in this
  walkthrough we used the -size attribute to specify we are looking for a
  file of a particular size, in this case 1033 bytes, we then wrote the 
 size 1033 and added a c to specify it is 1033 bytes in size.
+
+# Level 6  → Level 7
+
+### Level Goal
+
+> TThe password for the next level is stored somewhere on the server and has all of the following properties:
+    owned by user bandit7
+    owned by group bandit6
+    33 bytes in size
+> 
+
+### Walkthrough
+
+```bash
+find / -user bandit7 -size 33c -group bandit6
+```
+The level goal states that the password is stored "somewhere on the server" this indicates that we are going to need to search not just our current directory but search from the root diretory (/) so we can the entire server for the flag. The level goal also gives us a few more hints about the files attributes that we can add to our command to narrow our search, such as the user owner of the file is bandit7, the size of the file is 33 bytes and the group owner of the file is bandit6.
+
+![bandit0-2.PNG](https://github.com/EoinReid/Bandit-OverTheWire/blob/main/bandit-screenshots/bandit0-2.png)
+
+After running this command we can see that the output isn't as clean as we would like, and there seem to be alot of garbage files that also match the same attributes as our flag. However all of these files seem to be returning an error of sorts, such as "permission denied" or "no such file or directory". Lucky for us we can add a little bit to our command and strip all these errors from the output.
+
+```bash
+find / -user bandit7 -size 33c -group bandit6 2>/dev/null
+```
+
+![bandit0-2.PNG](https://github.com/EoinReid/Bandit-OverTheWire/blob/main/bandit-screenshots/bandit0-2.png)
+
+That's more like it! And now we can use the cat command to read the outputs of this file and get our flag!
+
+### Flag
+
+```
+z7WtoNQU2XfjmMtWA8u5rN4vzqu4v99S
+
+```
+
+### New Commands breakdown
+
+```
+find / -user bandit7 -size 33c -group bandit6 2>/dev/null
+
+```
+As explained in the previous level we can use the find command to find a specific file that we do not know the location of according to file attributes we can specify in the command.
+
+the "/" specifies that we want to start our search from the root folder (As opposed to from our current directory) this way we can ensure we search the entire server and aren't at risk of missing somewhere.
+
+"-user bandit7 -size33c -group bandit6" specifies that we want to search for a file that is owned by a user bandit7, is a size of 33 bytes, and is owned by a group bandit6.
+
+"2>/dev/null" was used to remove all those errors from the output so we could clear out the garbage and get to just the good stuff, such as our flag. But how does this work? The > opperator is used to redirect standard output, we can add a 2 in front like "2>" to redirect stderr or simply errors from the output of our command. Now we need somewhere to redirect that output to. /dev/null is the null device it takes any input you want and throws it away. It can be used to suppress any output.
+
