@@ -13,6 +13,8 @@ OverTheWire Bandit is a linux based Capture the Flag wargame designed for beginn
 - [Level 7 → Level 8](#level-7---level-8)
 - [Level 8 → Level 9](#level-8--level-9)
 - [Level 9 → Level 10](#level-9---level-10)
+- [Level 10 → Level 11](#level-10---level-11)
+- [Level 11 → Level 12](#level-11---level-12)
 
 # Level 0
 
@@ -655,3 +657,44 @@ strings data.txt | grep "="
 
 The string command lets us take any printable (aka human readable) string from a file . We then pipe to grep to search through these human readable stings for any string that begins with an = symbol.
 
+# Level 10  → Level 11
+
+### Level Goal
+
+> The password for the next level is stored in the file data.txt, which contains base64 encoded data
+
+### Walkthrough
+
+The level goal tells us that the flag is stored in the file data.txt, in base64 encoded data. This means to get our flag we have to decode the file.
+
+```bash
+ls
+```
+
+First we are juts confirming that data.txt is in our current directory.
+
+```bash
+base64 -d data.txt
+```
+
+Then using the base64 command we are going to decode the file from base64.
+
+And we have our flag!
+
+![bandit10-1.PNG](https://github.com/EoinReid/Bandit-OverTheWire/blob/main/bandit-screenshots/bandit10-1.png)
+
+
+### Flag
+
+```
+6zPeziLdR2RKNdNYFNb6nVCKzphlXHBM
+
+```
+
+### Commands breakdown
+
+```bash
+base64 -d data.txt
+```
+
+The base64 command is used to encode or decode data to/from the base64 format. We can specify we want to decode from base64 using the -d flag in our command followed by the file we want to decode.
