@@ -698,3 +698,50 @@ base64 -d data.txt
 ```
 
 The base64 command is used to encode or decode data to/from the base64 format. We can specify we want to decode from base64 using the -d flag in our command followed by the file we want to decode.
+
+# Level 11  → Level 12
+
+### Level Goal
+
+> The password for the next level is stored in the file data.txt, where all lowercase (a-z) and uppercase (A-Z) letters have been rotated by 13 positions
+
+### Walkthrough
+
+The level goal tells us that our flag is stored in a file called data.txt where all letters have been rotated by 13 positions (aka by 13 letters).
+This is known as the ROT13 algorithm and is a simple caeser cipher. For example using this algorithm the letter A because the letter N, as the letter N Is 13 letters away from A, the letter B would become the letter O and so on. So we just need to reverse this rotation by 13 to find out flag.
+
+
+```bash
+ls
+```
+
+First we are juts confirming that data.txt is in our current directory.
+
+```bash
+cat data.txt | tr '[a-z][A-Z]' '[n-za-m][N-ZA-M]'
+```
+
+Then we are going to output the contents of data.txt and pipe to the translate command where we are going to reverse the rotation by 13 letters to get the original text, and our flag!
+
+![bandit11-1.PNG](https://github.com/EoinReid/Bandit-OverTheWire/blob/main/bandit-screenshots/bandit11-1.png)
+
+
+
+### Flag
+
+```
+JVNBBFSmZwKKOP0XbFXOoW8chDz5yVRv
+
+```
+
+### Commands breakdown
+
+```bash
+cat data.txt | tr '[a-z][A-Z]' '[n-za-m][N-ZA-M]'
+```
+
+In this command we are outputing the contents of data.txt file using cat, then we are piping to use the translate command. Translate (tr) is used to translate or delete characters from the stanard input, in this case the stdin is the contents of the data.txt file.
+
+Then to reverse the ROT13 algorithm we are going to give our two sets in our tr command, the first set contain the normal alphabet range in both lower case and upper case and then in our second set the ROT13 alphabet range in lower case and uppercase.
+
+Remember how above I explained how the ROT13 algorithm just shifts letters by 13, so A becomes N, B becomes O and Z becomes M? Well thats all we are specifing in our second set, and thats why in the second set a and A becomes n and N etc.
