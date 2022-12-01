@@ -933,3 +933,59 @@ Like with the gz command, to decompress a bz2 file we will have to use the bzip2
 tar -xvf data8.bin.tar
 ```
 Similar with gz and bz2 for .tar files we can use the tar command to decompress or extract the contents. We used the -xvf flags so lets break them up. -x is for extracting the files, -v means verbosely or in other words just show more information about what the command is doing in the terminal, and -f is for file so you can specify the file you want to use with tar.
+
+# Level 13  → Level 14
+
+### Level Goal
+
+> The password for the next level is stored in /etc/bandit_pass/bandit14 and can only be read by user bandit14. For this level, you don’t get the next password, but you get a private SSH key that can be used to log into the next level. Note: localhost is a hostname that refers to the machine you are working on
+
+### Walkthrough
+
+After logging into bandit13, we are going to have a look at the directory contents.
+
+```bash
+ls
+```
+
+The level goal mentions that we will need a private SSH key in order to log on to the next level, and we can see that there is a file called sshkey.private in our directory. Let's use cat to see what's inside
+
+```bash
+cat sshkey.private
+```
+
+Looks like a private sshkey to me! 
+
+
+![bandit13-1.PNG](https://github.com/EoinReid/Bandit-OverTheWire/blob/main/bandit-screenshots/bandit13-1.png)
+
+
+```bash
+ssh -i sshkey.private -p 2220 bandit14@localhost -i sshkey.private
+```
+WE can use this ssh private key to log into bandit14 without using a password. 
+
+The level goal mentioned that the flag would be stored in /etc/bandit_pass/bandit14 so lets use cat to get the contents of this.
+
+```bash
+cat /etc/bandit_pass/bandit14 
+```
+and we have our flag!
+
+![bandit13-2.PNG](https://github.com/EoinReid/Bandit-OverTheWire/blob/main/bandit-screenshots/bandit13-2.png)
+
+### Flag
+
+```
+fGrHPx402xGC7U7rXKDaxiWFTOiF0ENq
+
+```
+
+### Commands breakdown
+
+```bash
+ssh -i sshkey.private -p 2220 bandit14@localhost -i sshkey.private
+```
+In the past using ssh we have only used the -p flag along with specifing the username and the host address, then we are usally prompted for a password (the previous levels flag). However if you have a private key the provides ssh access you can use this in place of a password to prove you have the correct authorisation. Thats what the -i flag is for, you use the -i to say you are going to use an ssh key and provei the sshkey location/path.
+
+The level goal mentioned connecting via localhost, so that is why we were able to just use bandit14@localhost instead of specifying the full host name as usual, because we are already on the host so localhost = bandit.labs.overthewire.org
