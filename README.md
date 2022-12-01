@@ -17,7 +17,7 @@ OverTheWire Bandit is a linux based Capture the Flag wargame designed for beginn
 - [Level 11 → Level 12](#level-11---level-12)
 - [Level 12 → Level 13](#level-12---level-13)
 - [Level 13 → Level 14](#level-13---level-14)
-
+- [Level 14 → Level 15](#level-14---level-15)
 # Level 0
 
 ### Level Goal
@@ -989,3 +989,35 @@ ssh -i sshkey.private -p 2220 bandit14@localhost -i sshkey.private
 In the past using ssh we have only used the -p flag along with specifing the username and the host address, then we are usally prompted for a password (the previous levels flag). However if you have a private key the provides ssh access you can use this in place of a password to prove you have the correct authorisation. Thats what the -i flag is for, you use the -i to say you are going to use an ssh key and provei the sshkey location/path.
 
 The level goal mentioned connecting via localhost, so that is why we were able to just use bandit14@localhost instead of specifying the full host name as usual, because we are already on the host so localhost = bandit.labs.overthewire.org
+
+# Level 14  → Level 15
+
+### Level Goal
+
+>The password for the next level can be retrieved by submitting the password of the current level to port 30000 on localhost.
+
+### Walkthrough
+
+The level goals states that we need to submit the password of bandit14, which we got from the previous level from /etc/bandit_pass/bandit14 (fGrHPx402xGC7U7rXKDaxiWFTOiF0ENq), to port 3000 on localhost. We are going to use the netcat command for this.
+
+```bash
+nc localhost 30000
+```
+Then we can just enter our password and we will get our new flag back!
+
+![bandit14-1.PNG](https://github.com/EoinReid/Bandit-OverTheWire/blob/main/bandit-screenshots/bandit14-1.png)
+
+### Flag
+
+```
+jN2kgmIXJ6fShzhT2avhotn4Zcka6tnt
+
+```
+
+### Commands breakdown
+
+```bash
+nc localhost 30000
+```
+
+Netcat, or nc, is a command that lets you read or write data between two networks. Using nc here we are connecting to localhost (aka the current host we rae connected to) and specifiying port 30000 from the level goal.
