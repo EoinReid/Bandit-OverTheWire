@@ -15,6 +15,8 @@ OverTheWire Bandit is a linux based Capture the Flag wargame designed for beginn
 - [Level 9 → Level 10](#level-9---level-10)
 - [Level 10 → Level 11](#level-10---level-11)
 - [Level 11 → Level 12](#level-11---level-12)
+- [Level 12 → Level 13](#level-12---level-13)
+- [Level 13 → Level 14](#level-13---level-14)
 
 # Level 0
 
@@ -745,3 +747,189 @@ In this command we are outputing the contents of data.txt file using cat, then w
 Then to reverse the ROT13 algorithm we are going to give our two sets in our tr command, the first set contain the normal alphabet range in both lower case and upper case and then in our second set the ROT13 alphabet range in lower case and uppercase.
 
 Remember how above I explained how the ROT13 algorithm just shifts letters by 13, so A becomes N, B becomes O and Z becomes M? Well thats all we are specifing in our second set, and thats why in the second set a and A becomes n and N etc.
+
+# Level 12  → Level 13
+
+### Level Goal
+
+> The password for the next level is stored in the file data.txt, which is a hexdump of a file that has been repeatedly compressed. For this level it may be useful to create a directory under /tmp in which you can work using mkdir. For example: mkdir /tmp/myname123. Then copy the datafile using cp, and rename it using mv (read the manpages!)
+
+### Walkthrough
+
+
+```bash
+ls
+```
+
+First we ls to see if data.txt is in our current working directory. The level goal suggest we create a directory in /tmp to work out of so we are going to do that.
+
+
+```bash
+mkdir /tmp/eoin
+```
+
+Then we are going to copy data.txt from our current directory to /tmp/eoin and then change directory
+
+```bash
+cp data.txt /tmp/eoin
+cd /tmp/eoin
+```
+
+
+We are going to use cat to take a look at the contents of data.txt
+```bash
+cat data.txt
+```
+
+AS the level goal told us - data.txt is a hexdump of a file, so we are going to need to reverse the hexdump back to a binary file by outputing the contents of data.txt and then using the xxd command to reverse the hexdump and redirect the output to a new file called data
+
+![bandit12-1.PNG](https://github.com/EoinReid/Bandit-OverTheWire/blob/main/bandit-screenshots/bandit12-1.png)
+
+```bash
+cat data.txt | xxd -r >data
+```
+
+Now if we use the file command on the data file we can see that it is a gunzip compressed file.
+
+
+```bash
+file data
+```
+
+However, despite this being the files type it does not have a .gz file extension and as a result using gunzip (gz) to decompress the file will not work, so first we need to add on the .gz file exentesion to the file using the mv command and rename the file to data2 to keep track of our new file.
+
+```bash
+mv data data2.gz
+```
+
+then we will use the gunzip decompress command to decompress the data file.
+
+```bash
+gz -d data.gz
+```
+
+Now if we use file on data2 we will see that it is now a bzip2 file, so we are going to repeat the same process above except instead of gunzip, it is bzip2.
+
+```bash
+file data2
+mv data2 data3.bz2
+bzip2 -d data3.bz2
+```
+
+Now if we use file on data3 we will see that dat3 is a gz file, so we are going to do the same as what we did with the data file.
+
+```bash
+file data3
+mv data3 data4.gz
+gz -d data4.gz
+```
+
+If we use file on data4.bin we will see it is a tar file, so we are going to do similar to the above expect using tar instead of gz or bzip2.
+
+```bash
+file data4
+mv data4 data5.tar
+tar data5.tar
+```
+
+using file again we see that data5.bin is also a tar file so we will repeat the process.
+
+
+```bash
+file data5.bin
+mv data5.bin data6.bin.tar
+tar data6.bin.tar
+```
+
+Repeating the process again we see that data6.bin is a bz2 file so we will do the same process that we used with data2.
+
+```bash
+file data6.bin
+mv data6.bin data7.bin.bz2
+bzip2 -d data7.bin.bz2
+```
+
+Using file again we will see that data7 is a tar file so we will repeat the process for tar files we used previously.
+
+```bash
+file data7.bin
+mv data7.bin data8.bin.tar
+tar -xvf data8.bin.tar
+```
+
+Using file again we see that data8 is a gz file so we will repeat the process for gz files we used previously.
+
+```bash
+file data8.bin
+mv data8.bin data9.bin.gz
+gzip -d data9.bin.gz
+```
+
+And... using file on data9.bin and we see it is an ASCII text file hurrah!
+
+use cat on data9.bin and we get our flag!
+
+
+```bash
+file data9.bin
+cat data9.bin
+```
+
+![bandit12-2.PNG](https://github.com/EoinReid/Bandit-OverTheWire/blob/main/bandit-screenshots/bandit12-2.png)
+
+### Flag
+
+```
+wbWdlBxEir4CaE8LaPhauuOo6pwRmrDw
+
+```
+
+### Commands breakdown
+
+
+```bash
+mkdir /tmp/eoin
+```
+
+the /tmp directory is a directory that works similar to your RAM, its a directory you use when you only want the contents to stay for as long as your PC as on, once your PC turns off or reboots anything in /tmp will be lost, same as anything in your computers memory (RAM). So this allows us to work in a directory without messing up other directories on the system and without having to worry about cleanig up the contents afterwards.
+
+```bash
+cp data.txt /tmp/eoin
+```
+
+the cp or copy command allows us to copy a file to another location, the same as you would when you right click and click copy and then right click and click paste. It will not remove or delete the orignal file.
+
+```bash
+cat data.txt | xxd -r >data
+```
+In this command we used cat to output the contents of data.txt, which was a hashdump. The command used to both create a hashdump of a file, and reverse a hexdump back to its original binary is xxd. so we are going to use this with the -r flag (reverse) to reverse the hashdump file back to its binary form and redrirect the output to a new file called data so we will still have data.txt to work with if anything goes wrong with our new file.
+
+
+```bash
+file data
+```
+As the level goal mentioned that the files were repeatdly compressed we are going to check the file type of data now that it is back in its binary format. This command told us that data was a file of type gzip, which is a compressed file type, just like our level goal hinted us about.
+
+```bash
+mv data data2.gz
+```
+As we know that the data file is a gzip file we know that we are going to need to use the gzip command (gz) to decompress the file. However this command only works on files that have the .gz extension. So we know that data is a gzip file, but it doesnt have the .gz extension so what gives? we cant decompress? Well this is where the mv or move command comes in. We can just rename the data file to have the .gz extension like the gzip command expects and it will work!
+
+This process it the same for the bz2 and tar files in this level, where the command will expect a particular file extension in order to decompress the file, so we can just rename the files with mv.
+
+```bash
+gz -d data2.gz
+```
+To decompress our newly named data2.gz file we can use the gz command with the -d (for decompress) flag.
+
+
+```bash
+bzip2 -d data3.bz2
+```
+Like with the gz command, to decompress a bz2 file we will have to use the bzip2 command with the -d flag (for decompress)
+
+
+```bash
+tar -xvf data8.bin.tar
+```
+Similar with gz and bz2 for .tar files we can use the tar command to decompress or extract the contents. We used the -xvf flags so lets break them up. -x is for extracting the files, -v means verbosely or in other words just show more information about what the command is doing in the terminal, and -f is for file so you can specify the file you want to use with tar.
