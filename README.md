@@ -18,6 +18,9 @@ OverTheWire Bandit is a linux based Capture the Flag wargame designed for beginn
 - [Level 12 → Level 13](#level-12---level-13)
 - [Level 13 → Level 14](#level-13---level-14)
 - [Level 14 → Level 15](#level-14---level-15)
+- [Level 15 → Level 16](#level-15---level-16)
+- [Level 16 → Level 17](#level-16---level-17)
+
 # Level 0
 
 ### Level Goal
@@ -1021,3 +1024,43 @@ nc localhost 30000
 ```
 
 Netcat, or nc, is a command that lets you read or write data between two networks. Using nc here we are connecting to localhost (aka the current host we rae connected to) and specifiying port 30000 from the level goal.
+
+
+# Level 15  → Level 16
+
+### Level Goal
+
+> The password for the next level can be retrieved by submitting the password of the current level to port 30001 on localhost using SSL encryption.
+
+### Walkthrough
+
+The level goal says to submit the password we used to get into the current level (jN2kgmIXJ6fShzhT2avhotn4Zcka6tnt) to local host port 30000 over SSL, so we are going to use the openssl command.
+
+```bash
+openssl s_client -connect localhost:30001 
+```
+
+Then we are going to submit the password.
+
+and we have our flag!
+
+
+![bandit15-1.PNG](https://github.com/EoinReid/Bandit-OverTheWire/blob/main/bandit-screenshots/bandit15-1.png)
+![bandit15-2.PNG](https://github.com/EoinReid/Bandit-OverTheWire/blob/main/bandit-screenshots/bandit15-2.png)
+
+
+
+### Flag
+
+```
+JQttfApK4SeyHwDlI9SXGR50qclOAil1
+
+```
+
+### Commands breakdown
+
+
+```bash
+openssl s_client -connect localhost:30001 
+```
+openssl s_client -connect, allows you to connect to the host over TLS/SSL and to provide input to the host, in our case the host was localhost and the port was 30001
