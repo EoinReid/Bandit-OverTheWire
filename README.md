@@ -1064,3 +1064,82 @@ JQttfApK4SeyHwDlI9SXGR50qclOAil1
 openssl s_client -connect localhost:30001 
 ```
 openssl s_client -connect, allows you to connect to the host over TLS/SSL and to provide input to the host, in our case the host was localhost and the port was 30001
+
+# Level 16  → Level 17
+
+### Level Goal
+
+> The credentials for the next level can be retrieved by submitting the password of the current level to a port on localhost in the range 31000 to 32000. First find out which of these ports have a server listening on them. Then find out which of those speak SSL and which don’t. There is only 1 server that will give the next credentials, the others will simply send back to you whatever you send to it.
+
+### Walkthrough
+
+The level goals tells us that the port we need to submit the password to is in the port range 31000 to 32000 so we are going to conduct an nmap scan on localhost in this port range to to see which ports are open in this range and which have SSL.
+
+
+```bash
+nmap localhost -p31000-32000 -A
+```
+
+![bandit16-1.PNG](https://github.com/EoinReid/Bandit-OverTheWire/blob/main/bandit-screenshots/bandit16-1.png)
+
+We can see in the screenshot that there are 5 open ports, of which only 2 speak SSL, and only one does not have an echo service (Meaning that it will not just repeat back what we send to it as the level goal warns). So it looks like port 31790/tcp is our target port so lets test it out using openssl.
+
+
+```bash
+openssl s_client -connect localhost:31790
+```
+
+![bandit16-2.PNG](https://github.com/EoinReid/Bandit-OverTheWire/blob/main/bandit-screenshots/bandit16-2.png)
+
+And lets enter our password we used to get into this level(JQttfApK4SeyHwDlI9SXGR50qclOAil1) and we have our flag, which is an RSA private key.
+
+![bandit16-3.PNG](https://github.com/EoinReid/Bandit-OverTheWire/blob/main/bandit-screenshots/bandit16-3.png)
+
+We are going to copy this RSA key and paste it into a file on our computer, I am doing this use the nano command to create a new file and paste it in and saving it as bandit17.sshkey
+
+```bash
+nano
+```
+
+![bandit16-4.PNG](https://github.com/EoinReid/Bandit-OverTheWire/blob/main/bandit-screenshots/bandit16-4.png)
+
+im then going to change the permissions of the file with chmod so we can use it to SSH Into bandit17
+
+```bash
+chmod 600 bandit17.sshkey
+```
+
+
+```bash
+ssh -i bandit17.sshkey -p 2220 bandit17.bandit.labs.overthewire.org
+```
+
+### Flag
+
+```
+This levels Flag is the RSA private key that is returned from the server.
+
+```
+
+### Commands breakdown
+
+
+```bash
+nmap localhost -p31000-32000 -A
+```
+In this command we are using the nmap tool, which allows us to scan a host to find out things such as any open ports they have, in this case that host is local host, nmap by default will scan a host for the 1000 most common port services so we are going to specify which ports in particular we want to scan as the level goal specifies this port range using the -p flag. I also used the -A flag which enable OS detection, version detection, script scanning, and traceroute and will allow us to see what services are running on each port. Without using the -A flag we would have to individually test each port using openssl to find which ports are using ssl and of those which are the correct port so -A speeds things up for us.
+
+```bash
+chmod 600 bandit17.sshkey
+```
+chmod is used to change the permissions of a file, 600 is a shorthand way of writing permissions for three different types of people (user permissions)(group permissions)(everyone else), 6 in this case means we want the file owner to have read and write permissions and groups everyone else to have no permissions of our file. This is neccessary when using a private key to conenct over SSH as this key cannot be accessible by other people. If for example i set the permissions of bandit17.sshkey to 666 (meaning giving read and write permissions to everyone) and attempt to connect to bandit17 I will recieve the following error.
+
+```bash
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@         WARNING: UNPROTECTED PRIVATE KEY FILE!          @
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+Permissions 0666 for 'bandit17.sshkey' are too open.
+It is required that your private key files are NOT accessible by others.
+```
+
+
