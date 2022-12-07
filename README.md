@@ -1170,3 +1170,60 @@ hga5tuuCLF6fFzUpnagiMN8ssu9LFrdg
 ```
 
 ### Commands breakdown
+
+
+```bash
+diff passwords.old passwords.new
+```
+The diff command allows you to compare files line by line and fine the differences, if any, between them. In this case it allowed us to find the one line that was different between the two files, wihch was our flag.
+
+# Level 18  → Level 19
+
+### Level Goal
+
+> The password for the next level is stored in a file readme in the homedirectory. Unfortunately, someone has modified .bashrc to log you out when you log in with SSH.
+
+
+### Walkthrough
+
+As the level goal states that someone has edited the .bashrc file to log you out when you attempt to log in with SSH, that means to log in successfully we will have to log in in such a way that we can ignore the .bashrc file that is going to log us out, we can do this by telling bash to not use a profile or use the rc file on startup.
+
+```bash
+ssh bandit18@bandit.labs.overthewire.org -p 2220 "bash --noprofile --norc"
+```
+
+As we have told bash not to use a profile or the rc file, we have succesfully bypassed the edited bashrc file that will log us out, but as a result of doing so you will notice that your shell looks empty or like the log in has "hung", well this is because there is no settings being used, so you can just start typing your commands. First we want to see the contents of the directory we are in.
+
+
+```bash
+ls
+```
+
+the readme file looks interesting so lets print out its contents
+
+```bash
+cat readme
+```
+
+and we have our flag!
+
+![bandit18-1.PNG](https://github.com/EoinReid/Bandit-OverTheWire/blob/main/bandit-screenshots/bandit18-1.png)
+
+
+### Flag
+
+```
+awhqfNnAbc1naukrpqDYcF95h7HoMTrC
+
+```
+
+### Commands breakdown
+
+```bash
+ssh bandit18@bandit.labs.overthewire.org -p 2220 "bash --noprofile --norc"
+```
+
+The fist bit of this command is the normal ssh command we have used in the past, but the part in quoatation marks is new, and it is what we used to bypass the edited .bashrc file.
+
+"bash --noprofile --norc" tells bash to disable processing the startup files and setting, which allows us to ignore the edited .bashrc file. One downside of this method is that this will also mean bash will not set PS1(the variable used to generate the terminal prompt that we are used to) and will make it look as though the terminal has hung, but this isn't such a big deal once you know to expect this.
+
