@@ -21,7 +21,7 @@ OverTheWire Bandit is a linux based Capture the Flag wargame designed for beginn
 - [Level 15 → Level 16](#level-15---level-16)
 - [Level 16 → Level 17](#level-16---level-17)
 - [Level 17 → Level 18](#level-17---level-18)
-
+- [Level 18 → Level 19](#level-18---level-19)
 # Level 0
 
 ### Level Goal
