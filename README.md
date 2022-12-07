@@ -22,6 +22,8 @@ OverTheWire Bandit is a linux based Capture the Flag wargame designed for beginn
 - [Level 16 → Level 17](#level-16---level-17)
 - [Level 17 → Level 18](#level-17---level-18)
 - [Level 18 → Level 19](#level-18---level-19)
+- [Level 19 → Level 20](#level-19---level-20)
+
 # Level 0
 
 ### Level Goal
@@ -1226,4 +1228,54 @@ ssh bandit18@bandit.labs.overthewire.org -p 2220 "bash --noprofile --norc"
 The fist bit of this command is the normal ssh command we have used in the past, but the part in quoatation marks is new, and it is what we used to bypass the edited .bashrc file.
 
 "bash --noprofile --norc" tells bash to disable processing the startup files and setting, which allows us to ignore the edited .bashrc file. One downside of this method is that this will also mean bash will not set PS1(the variable used to generate the terminal prompt that we are used to) and will make it look as though the terminal has hung, but this isn't such a big deal once you know to expect this.
+
+# Level 19  → Level 20
+
+### Level Goal
+
+>To gain access to the next level, you should use the setuid binary in the homedirectory. Execute it without arguments to find out how to use it. The password for this level can be found in the usual place (/etc/bandit_pass), after you have used the setuid binary.
+
+### Walkthrough
+
+As the level goal states the we need to use the setuid binary file in our home directory lets check the contents of our current directory to see if it is there.
+
+```bash
+ls
+```
+
+We can see that there is a file called bandit20-do lets execute it and see how we can use it.
+
+```bash
+./bandit20-do
+```
+
+So we see that it lets us run a command as another user, well we know that the password for the next file is in the usual /etc/bandit_pass/ location so lets execute this file to attempt to output the contents of bandit20 in bandit_pass and try get our next flag!
+
+```bash
+./bandit20-do cat /etc/bandit_pass/bandit20
+```
+
+And we have our flag!
+
+![bandit19-1.PNG](https://github.com/EoinReid/Bandit-OverTheWire/blob/main/bandit-screenshots/bandit19-1.png)
+
+
+### Flag
+
+```
+VxCazJaVykI6W36BkBU0mJTCM8rR95XT
+
+```
+
+### Commands breakdown
+
+```bash
+./bandit20-do
+```
+To execute a file you want to put ./ before the name of the file
+
+```bash
+./bandit20-do cat /etc/bandit_pass/bandit20
+```
+Becuase bandit20-do has a SUID (set user identity) bit, it allows us to temporarily execute files/commands with the same permissions and privileges as the file owner. This is quite useful in alot of scenarios, such as when you want to update your accounts log in password, you will need temporarily elevated privileges (usually of root) to write your new password to the passwords database.
 
