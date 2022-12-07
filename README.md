@@ -20,6 +20,7 @@ OverTheWire Bandit is a linux based Capture the Flag wargame designed for beginn
 - [Level 14 → Level 15](#level-14---level-15)
 - [Level 15 → Level 16](#level-15---level-16)
 - [Level 16 → Level 17](#level-16---level-17)
+- [Level 17 → Level 18](#level-17---level-18)
 
 # Level 0
 
@@ -1142,4 +1143,30 @@ Permissions 0666 for 'bandit17.sshkey' are too open.
 It is required that your private key files are NOT accessible by others.
 ```
 
+# Level 17  → Level 18
 
+### Level Goal
+
+> There are 2 files in the homedirectory: passwords.old and passwords.new. The password for the next level is in passwords.new and is the only line that has been changed between passwords.old and passwords.new
+
+### Walkthrough
+
+As the level goal states that the flag for th next level is in a file called passwords.new and is the only line that is different between passwords.old and passwords.new. So to find this new line (or different line you could say!) we are going to use the diff (different) command.
+
+```bash
+diff passwords.old passwords.new
+```
+
+And we have our flag!
+
+![bandit17-1.PNG](https://github.com/EoinReid/Bandit-OverTheWire/blob/main/bandit-screenshots/bandit17-1.png)
+
+
+### Flag
+
+```
+hga5tuuCLF6fFzUpnagiMN8ssu9LFrdg
+
+```
+
+### Commands breakdown
