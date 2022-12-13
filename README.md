@@ -1312,7 +1312,7 @@ echo "VxCazJaVykI6W36BkBU0mJTCM8rR95XT" | nc -l -p 54321 &
 Now we can use the suconnect binary on port 54321 to get the password for the next level
 
 ```bash
-/suconnect 54321
+./suconnect 54321
 ```
 
 and we have our flag!
@@ -1335,5 +1335,59 @@ NvEJF7oVjkddltPSrdKEFOllh9V1IBcq
 echo "VxCazJaVykI6W36BkBU0mJTCM8rR95XT" | nc -l -p 54321 &
 ```
 In this command we are echoing the password for the current level and then piping the output to the netcat (nc) command, using the -l flag to specify we are going to listen and -p to specify ove rport 54321. the & symbol is used to run this command in the background so we can continue to use our terminal while it runs.
+
+# Level 21  → Level 22
+
+### Level Goal
+
+> A program is running automatically at regular intervals from cron, the time-based job scheduler. Look in /etc/cron.d/ for the configuration and see what command is being executed.
+
+### Walkthrough
+
+The level goal lets us know that we need ot look in /etc/cron.d/ so we are first going to charge our directory to that.
+
+```bash
+cd /etc/cron.d/
+```
+Next we are going to list the directory contents to have a look at whats there.
+
+```bash
+ls
+```
+
+We see that there is a file called cronjob_bandit22 that looks interesting so we are going to output the contents and see whats inside.
+
+```bash
+cat cronjob_bandit23
+```
+
+We can see from the output that the cronjob is always running (due to the * symbols) an that it is taking the outputs of a file called cronjob_bandit22.sh in /usr/bin/ and discarding it using /dev/null so we are going to take a look at this shell file.
+
+```bash
+cat /usr/bin/crojob_bandit22.sh
+```
+
+We can see that this shell script is changing the permissions of a file in the temp directory and taking the output of /etc/bandit_pass/bandit22 and redirecting this output to /tmp/t7O6lds9S0RqQh9aMcz6ShpAoZKF7fgv. So to get the password for the next level we are going to need to read the contents of this tmp file.
+
+
+```bash
+cat /tmp/t7O6lds9S0RqQh9aMcz6ShpAoZKF7fgv
+```
+
+And we have our flag!
+
+![bandit21-1.PNG](https://github.com/EoinReid/Bandit-OverTheWire/blob/main/bandit-screenshots/bandit21-1.png)
+
+### Flag
+
+```
+WdDozAdTM2z9DiFEQ2mGlwngMfj4EZff
+
+```
+
+### Commands breakdown
+
+No new commands in this level.
+
 
 
