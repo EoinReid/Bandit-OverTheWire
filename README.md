@@ -23,6 +23,9 @@ OverTheWire Bandit is a linux based Capture the Flag wargame designed for beginn
 - [Level 17 → Level 18](#level-17---level-18)
 - [Level 18 → Level 19](#level-18---level-19)
 - [Level 19 → Level 20](#level-19---level-20)
+- [Level 20 → Level 21](#level-20---level-21)
+- [Level 21 → Level 22](#level-21---level-22)
+- [Level 22 → Level 23](#level-22---level-23)
 
 # Level 0
 
@@ -1278,4 +1281,59 @@ To execute a file you want to put ./ before the name of the file
 ./bandit20-do cat /etc/bandit_pass/bandit20
 ```
 Becuase bandit20-do has a SUID (set user identity) bit, it allows us to temporarily execute files/commands with the same permissions and privileges as the file owner. This is quite useful in alot of scenarios, such as when you want to update your accounts log in password, you will need temporarily elevated privileges (usually of root) to write your new password to the passwords database.
+
+# Level 20  → Level 21
+
+### Level Goal
+
+>There is a setuid binary in the homedirectory that does the following: it makes a connection to localhost on the port you specify as a commandline argument. It then reads a line of text from the connection and compares it to the password in the previous level (bandit20). If the password is correct, it will transmit the password for the next level (bandit21).
+
+### Walkthrough
+
+In the level goal it lets us know there is an SUID binary in the home directory so we are going to find the file by listing the contents of the directory.
+
+```bash
+ls
+```
+
+We see there is a SUID binary file called suconnect so we are going to execute it so we can see its usage.
+
+```bash
+./suconnect
+```
+
+We can see that it connects to a give port on localhost and then if it recieves the correct password (that being the password for the current level) it will transmit back the password for the next level.
+
+So we are going to use netcat to to provide the current password level on port 54321.
+
+```bash
+echo "VxCazJaVykI6W36BkBU0mJTCM8rR95XT" | nc -l -p 54321 &
+```
+Now we can use the suconnect binary on port 54321 to get the password for the next level
+
+```bash
+/suconnect 54321
+```
+
+and we have our flag!
+
+
+![bandit20-1.PNG](https://github.com/EoinReid/Bandit-OverTheWire/blob/main/bandit-screenshots/bandit20-1.png)
+
+
+### Flag
+
+```
+NvEJF7oVjkddltPSrdKEFOllh9V1IBcq
+
+```
+
+### Commands breakdown
+
+
+```bash
+echo "VxCazJaVykI6W36BkBU0mJTCM8rR95XT" | nc -l -p 54321 &
+```
+In this command we are echoing the password for the current level and then piping the output to the netcat (nc) command, using the -l flag to specify we are going to listen and -p to specify ove rport 54321. the & symbol is used to run this command in the background so we can continue to use our terminal while it runs.
+
 
