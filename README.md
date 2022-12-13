@@ -1390,4 +1390,67 @@ WdDozAdTM2z9DiFEQ2mGlwngMfj4EZff
 No new commands in this level.
 
 
+# Level 22  → Level 23
+
+### Level Goal
+> A program is running automatically at regular intervals from cron, the time-based job scheduler. Look in /etc/cron.d/ for the configuration and see what command is being executed.
+
+### Walkthrough
+
+In the level goal we see that we need to look in /etc/cron.d/ again so we are going to change our directory.
+
+```bash
+cd /etc/cron.d/
+```
+
+Next we are going to list the contents of our directory 
+
+```bash
+ls
+```
+
+We can see there is an interesting file called cronjob_bandit23 so we are going to output the contents of this file to see whats inside.
+
+```bash
+cat cronjob_bandit23
+```
+we can see that this cronjob, similar to the previous level, is running all the time (due to the * symbols) and that it is redirecting the output of a shell script called /usr/bin/cronjob_bandit23.sh to /dev/null to be discarded. So we are going to take a look at the shell script.
+
+```bash
+cat /usr/bin/cronjob_bandit23.sh
+```
+
+We can see in the shell script that there is two variables, one is myname which is equal to the current logged in user and mytarget which is equal to the phrase "echo I am user $myname | md5um | cut -d ' ' -f 1". The password file we are looking for is located in /tmp/$mytarget.
+
+For myname we know that we want that to be bandit23, as that would be the result if we ran whoami on bandit23 user. so we can calcluate mytarget but replaced $myname with the value bandit23 and running the command from the shell script in our terminal to get the required hash name.
+
+```bash
+echo I am user bandit23 | md5sum | cut -d ' ' -f 1
+```
+
+From this we get the hash we need and the file name so we can just output the contents
+
+
+```bash
+cat /tmp/8ca319486bfbbc3663ea0fbe81326349
+QYw0Y2aiA672PsMmh9puTQuhoz8SyR2G
+```
+
+And we have our flag!
+
+![bandit22-1.PNG](https://github.com/EoinReid/Bandit-OverTheWire/blob/main/bandit-screenshots/bandit22-1.png)
+
+### Flag
+
+```
+QYw0Y2aiA672PsMmh9puTQuhoz8SyR2G
+
+```
+
+### Commands breakdown
+
+```bash
+echo I am user bandit23 | md5sum | cut -d ' ' -f 1
+```
+This command is taking from the shell script cronjob_bandit23.sh. First we are echoing "I am user bandit23" and then piping this output to the md5sum command which will calculate an md5 hash of this output. We then pipe this has to the cut command, where we are going to specify the delimiter as ' '  ( a space) using the -d flag and that we want the first field using -f 1 (cut takes inputs as a list starting at index 1, so our hash will be a single entry in the list so thats why we need to specify 1, if you change this command to -f 2 for example the output will be blank).
 
