@@ -26,6 +26,7 @@ OverTheWire Bandit is a linux based Capture the Flag wargame designed for beginn
 - [Level 20 → Level 21](#level-20---level-21)
 - [Level 21 → Level 22](#level-21---level-22)
 - [Level 22 → Level 23](#level-22---level-23)
+- [Level 23 → Level 24](#level-23---level-24)
 
 # Level 0
 
@@ -1453,4 +1454,77 @@ QYw0Y2aiA672PsMmh9puTQuhoz8SyR2G
 echo I am user bandit23 | md5sum | cut -d ' ' -f 1
 ```
 This command is taking from the shell script cronjob_bandit23.sh. First we are echoing "I am user bandit23" and then piping this output to the md5sum command which will calculate an md5 hash of this output. We then pipe this has to the cut command, where we are going to specify the delimiter as ' '  ( a space) using the -d flag and that we want the first field using -f 1 (cut takes inputs as a list starting at index 1, so our hash will be a single entry in the list so thats why we need to specify 1, if you change this command to -f 2 for example the output will be blank).
+
+# Level 23  → Level 24
+
+### Level Goal
+
+> A program is running automatically at regular intervals from cron, the time-based job scheduler. Look in /etc/cron.d/ for the configuration and see what command is being executed.
+
+### Walkthrough
+
+The level goal tells us to look in /etc/cron.d/ so we are going to change directories.
+
+```bash
+cd /etc/cron.d/
+```
+
+Then we are going to read the outputs of cronjob_bandit24.sh similar to previous levels involving /etc/cron.d
+
+
+```bash
+cat cronjob_bandit24
+```
+
+We see this cron file is mentioning a script in the /usr/bin directory so we are going to take a look at this script.
+
+
+```bash
+cat /usr/bin/cronjob_bandit24.sh
+```
+
+
+```bash
+bandit23@bandit:/etc/cron.d$ cat /usr/bin/cronjob_bandit24.sh
+#!/bin/bash
+
+myname=$(whoami)
+
+cd /var/spool/$myname/foo
+echo "Executing and deleting all scripts in /var/spool/$myname/foo:"
+for i in * .*;
+do
+    if [ "$i" != "." -a "$i" != ".." ];
+    then
+        echo "Handling $i"
+        owner="$(stat --format "%U" ./$i)"
+        if [ "${owner}" = "bandit23" ]; then
+            timeout -s 9 60 ./$i
+        fi
+        rm -f ./$i
+    fi
+done
+```
+
+We can see in the script that every 60 seconds it is executing all scripts in /var/spool/$myname/foo and then deleting them. 
+
+Let's try to just print the output of /etc/bandit_pass/bandit24
+
+cat bandit24
+
+output
+
+yeah.. that would be too easy, but we have another way! using /var/spool/myname/foo and placing a script in there to read the password for us..
+
+
+![bandit0-2.PNG](https://github.com/EoinReid/Bandit-OverTheWire/blob/main/bandit-screenshots/bandit0-2.png)
+
+### Flag
+
+```
+QYw0Y2aiA672PsMmh9puTQuhoz8SyR2G
+
+```
+
+### Commands breakdown
 
