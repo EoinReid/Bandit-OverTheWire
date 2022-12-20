@@ -1607,3 +1607,85 @@ VAfGXJ1PBSsPSnvsjI8p759leLZ9GGar
 
 ### Commands breakdown
 
+No new commands in this level!
+
+# Level 24  → Level 25
+
+### Level Goal
+
+> A daemon is listening on port 30002 and will give you the password for bandit25 if given the password for bandit24 and a secret numeric 4-digit pincode. There is no way to retrieve the pincode except by going through all of the 10000 combinations, called brute-forcing.
+You do not need to create new connections each time
+
+### Walkthrough
+
+The level goal lets us know we are going to have to write a shell script to brute force our way into getting the password this time, so lets make a directory in /tmp to work from and change our directories
+
+```bash
+mkdir /tmp/shell-script
+cd /tmp/shell-script
+```
+
+Then lets use nano to create our shell script
+
+```bash
+nano brute-force.sh
+```
+
+So we now from the level goal our script needs to do a couple things.
+
+1) Connect to port 30002 on localhost
+2) Provide the password for bandit24 along with a 4 digit pincode (10,000 possible combinations due to there 10 options per digit (0-9) and there being 4 digits, so 10^4).
+3) No need to create a new connection everytime
+
+So lets write our shell script
+
+```bash
+#! /bin/bash
+for i in {0000..9999}
+do 
+  echo "VAfGXJ1PBSsPSnvsjI8p759leLZ9GGar $i"
+done | nc localhost 30002
+```
+
+Then run our script
+
+```bash
+bash brute-force.sh
+```
+
+And we get our flag!
+
+### Flag
+
+```
+p7TaowMYrmu23Ol8hiZh9UvD0O9hpx8d
+
+```
+
+### Commands breakdown
+
+```bash
+#! /bin/bash
+for i in {0000..9999}
+do 
+  echo "VAfGXJ1PBSsPSnvsjI8p759leLZ9GGar $i"
+done | nc localhost 30002
+```
+
+I am going to breakdown our shell script so you understand what we did and how we got our flag using it.
+
+```bash
+for i in {0000..9999}
+```
+This is a for loop that is set in the range 0000-9999. This means that our loop will run 10,000 times start ing at 0000. and "i" will be assigned a new number depending on what iteration of the loop it is in. For example on the first iteration i = 0000, the second iteration i = 0001 and so on.
+
+```bash
+do
+ echo "VAfGXJ1PBSsPSnvsjI8p759leLZ9GGar $i"
+ done | nc localhost 30002
+```
+
+In the last part of the script we are echoing the bandit24 password and $i (which is equal to i as explainaed above) so for example in the first iteration we will be echoing "VAfGXJ1PBSsPSnvsjI8p759leLZ9GGar 0000". Then we are using the done keyword and piping to netcat to connect to localhost over port 30002, this allows us to try this using a continuos connection so we dont have to reconnect everytime we attempt to brute force speeding up the process.
+
+
+
