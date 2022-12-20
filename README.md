@@ -1687,5 +1687,83 @@ do
 
 In the last part of the script we are echoing the bandit24 password and $i (which is equal to i as explainaed above) so for example in the first iteration we will be echoing "VAfGXJ1PBSsPSnvsjI8p759leLZ9GGar 0000". Then we are using the done keyword and piping to netcat to connect to localhost over port 30002, this allows us to try this using a continuos connection so we dont have to reconnect everytime we attempt to brute force speeding up the process.
 
+# Level 25  → Level 26
+
+### Level Goal
+
+> Logging in to bandit26 from bandit25 should be fairly easy… The shell for user bandit26 is not /bin/bash, but something else. Find out what it is, how it works and how to break out of it.
+
+### Walkthrough
+
+We are first going to take a look at our directory contents
+
+```bash
+ls
+```
+
+We see there is a file called bandt26.sshkey lets try to ssh into bandit26 with it.
+
+```bash
+ssh -i bandit26.sshkey bandit26@localhost -p 2220
+```
+
+You can see that initally we connect, but then we are disconnected from ssh-ing in as bandit26 using this key. This looks like a similar issue to one of the previous levels were the .bashrc file was configured to disconnect us. In the level goal it states that the shell for bandit26 is different than /bin/bash so lets try find out what it is.
 
 
+We are going to look in the passwd file for bandit26
+
+```bash
+cat /etc/passwd | grep "bandit26"
+```
+
+We can see the shell bandit26 is using is /usr/bin/showtext
+
+```bash
+Output:
+bandit26:x:11026:11026:bandit level 26:/home/bandit26:/usr/bin/showtext
+```
+Lets take a look at it
+
+```bash
+cat /usr/bin/showtext
+```
+We can see that it is actually a shell script, and it is the reason it is causing us to be disconnected as it displaying the usual welcome ssh screen and then exiting.
+
+
+```bash
+output:
+#!/bin/sh
+
+export TERM=linux
+
+exec more ~/text.txt
+exit 0
+
+```
+What this means instead of receiving the actual welcome graphic we are used to, the display from the text.txt file is being displayed using the more command and then exited, which may work to our advantage.
+
+lets try making our terminal smaller and logging in with ssh again.
+
+You will know you will have done this right when you see the "more" popup on the lower left hand side of your terminal like the screesnhot below.
+
+![Screenshot from 2022-12-20 17-56-26](https://user-images.githubusercontent.com/40269943/208734193-5928c40f-c1dc-4e7b-8d1e-eea927f031f7.png)
+
+Next you want to press the "v" key, this will actually allow you to edit the text.txt file that is being displayed.
+
+Then in vim, you want to enter ":e /etc/bandit_pass/bandit26"
+
+And we have our flag!
+
+![Screenshot from 2022-12-20 17-58-54](https://user-images.githubusercontent.com/40269943/208734531-97f2e635-07a4-4454-8fee-dc7894bb118e.png)
+
+
+### Flag
+
+```
+c7GvcKlw9mC7aUQaPx7nwFstuAIBw1o1
+
+```
+
+### Commands breakdown
+
+No new commands in this level
