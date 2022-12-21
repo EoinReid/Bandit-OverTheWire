@@ -1842,19 +1842,35 @@ Clone the repository and find the password for the next level.
 
 ### Walkthrough
 
-
-
+First we are going to create a directory in /tmp to work from and change directories to it.
 ```bash
 mkdir /tmp/git
 cd /tmp/git
 ```
-
+Then since the level goal tells us the location of the git repo we are going to use git clone to clone the repo.
 
 ```bash
 git clone ssh://bandit27-git@localhost:2220/home/bandit27-git/repo
 ```
+When prompted for a password as stated in the level goal the password is the same as bandit27's.
 
 YnQpBuifNMas1hcUFk70ZmqkhUU2EuaS
+
+Then lets change directory to inside the repo and look at the contents.
+
+```bash
+cd repo
+ls
+```
+
+We see an interesting file called README so lets read it.
+
+```bash
+cat README
+```
+
+And we have our flag!
+
 ### Flag
 
 ```
@@ -1863,3 +1879,8 @@ AVanL161y9rsbcJIsFHuw35rjaOM19nR
 ```
 
 ### Commands breakdown
+
+```bash
+git clone ssh://bandit27-git@localhost:2220/home/bandit27-git/repo
+```
+git clone allows you to copy the repository of given repo, in this instance we provided bandit27-git/repo path and made a copy of it to our current directory.
