@@ -30,6 +30,7 @@ OverTheWire Bandit is a linux based Capture the Flag wargame designed for beginn
 - [Level 24 → Level 25](#level-24---level-25)
 - [Level 25 → Level 26](#level-25---level-26)
 - [Level 26 → Level 27](#level-26---level-27)
+- [Level 27 → Level 28](#level-27---level-28)
 
 # Level 0
 
@@ -1831,3 +1832,34 @@ In this command within vim, we are specifying that we want to set our shell as /
 :shell
 ```
 In this command within vim, we are telling vim to open up a shell.
+
+# Level 27  → Level 28
+
+### Level Goal
+
+> There is a git repository at ssh://bandit27-git@localhost/home/bandit27-git/repo. The password for the user bandit27-git is the same as for the user bandit27.
+Clone the repository and find the password for the next level.
+
+### Walkthrough
+
+
+
+```bash
+mkdir /tmp/git
+cd /tmp/git
+```
+
+
+```bash
+git clone ssh://bandit27-git@localhost:2220/home/bandit27-git/repo
+```
+
+YnQpBuifNMas1hcUFk70ZmqkhUU2EuaS
+### Flag
+
+```
+AVanL161y9rsbcJIsFHuw35rjaOM19nR
+
+```
+
+### Commands breakdown
