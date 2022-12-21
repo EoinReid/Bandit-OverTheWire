@@ -29,6 +29,7 @@ OverTheWire Bandit is a linux based Capture the Flag wargame designed for beginn
 - [Level 23 → Level 24](#level-23---level-24)
 - [Level 24 → Level 25](#level-24---level-25)
 - [Level 25 → Level 26](#level-25---level-26)
+- [Level 25 → Level 26](#level-25---level-26)
 
 # Level 0
 
@@ -1767,3 +1768,66 @@ c7GvcKlw9mC7aUQaPx7nwFstuAIBw1o1
 ### Commands breakdown
 
 No new commands in this level
+
+# Level 26  → Level 27
+
+### Level Goal
+
+> Good job getting a shell! Now hurry and grab the password for bandit27!
+
+### Walkthrough
+
+To get started we need to pick up where we left off on Level 25, inside vim editing the text.txt file that we accessed using the more exploit.
+
+From there we are going to get access to the bandit27 shell.
+
+First we are going to reset the shell to /bin/bash
+
+```bash
+:set shell=/bin/bash
+```
+Then we are going to access the shell
+```bash
+:shell
+```
+We now have access to bandit26's shell, lets take a look at the directory
+
+```bash
+ls
+```
+
+We can see the text.txt file that contained the display ASCII art, as well as a file called bandit27-do, lets run it to see what it is
+
+```bash
+./bandit27-do 
+Run a command as another user.
+```
+We can see that it allows us to run a command as another user, so lets use this to get the flag.
+
+
+```bash
+./bandit27-do cat /etc/bandit_pass/bandit27
+```
+
+And we have our flag!
+
+### Flag
+
+```
+YnQpBuifNMas1hcUFk70ZmqkhUU2EuaS
+
+```
+
+### Commands breakdown
+
+
+```bash
+:set shell=/bin/bash
+```
+
+In this command within vim, we are specifying that we want to set our shell as /bin/bash, aka the shell that we are normally using.
+
+```bash
+:shell
+```
+In this command within vim, we are telling vim to open up a shell.
