@@ -1888,3 +1888,102 @@ git clone ssh://bandit27-git@localhost:2220/home/bandit27-git/repo
 git clone allows you to copy the repository of given repo, in this instance we provided bandit27-git/repo path and made a copy of it to our current directory.
 
 
+# Level 28  → Level 29
+
+### Level Goal
+
+> There is a git repository at ssh://bandit28-git@localhost/home/bandit28-git/repo. The password for the user bandit28-git is the same as for the user bandit28.
+Clone the repository and find the password for the next level.
+
+### Walkthrough
+
+Like similar levels we are going to start by creating a directory in /tmp to work frome and change directories
+
+```bash
+mkdir /tmp/git-b28
+cd /tmp/git-b28
+```
+Then we are going to clone the git repository using the repo location provided, remember the password for bandit28-git is the same as the password for bandit28.
+
+```bash
+git clone ssh://bandit28-git@localhost:2220/home/repo
+```
+
+Then we are going to look the directory contents and change directory to repo
+```bash
+ls
+cd repo
+```
+
+We see a README.md file so lets take a look at the contents
+```bash
+cat README.md
+```
+README.md
+```bash
+ Bandit Notes
+Some notes for level29 of bandit.
+
+ credentials
+
+- username: bandit29
+- password: xxxxxxxxxx
+```
+
+We see that there is a username, but the password is censored out, lets take a look a the commit logs for this repo to see if it was maybe left in in an earlier version.
+
+```bash
+git log .
+```
+Git commit logs:
+```bash
+commit 5f45cfaca938393c7706fec16ab1ca627e947f64 (HEAD -> master, origin/master, origin/HEAD)
+Author: Morla Porla <morla@overthewire.org>
+Date:   Sat Dec 3 08:14:06 2022 +0000
+
+    fix info leak
+
+commit f08ee321c5f564b2da90789fac14b5ae2e55c56c
+Author: Morla Porla <morla@overthewire.org>
+Date:   Sat Dec 3 08:14:06 2022 +0000
+
+    add missing data
+
+commit 6968b2ffdcc317a1aeb2ebfb54259f860a390354
+Author: Ben Dover <noone@overthewire.org>
+Date:   Sat Dec 3 08:14:06 2022 +0000
+
+    initial commit of README.md
+
+```
+We are currently in commit 5f45cfaca938393c7706fec16ab1ca627e947f64 (Where it says it fixed the info leak.. interesting) so lets checkout the previous commit f08ee321c5f564b2da90789fac14b5ae2e55c56c and try see what info was leaked
+
+```bash
+git checkout f08ee321c5f564b2da90789fac14b5ae2e55c56c
+```
+
+Now lets look at README.MD again
+```bash
+cat README.MD
+```
+
+And we have our flag!
+
+### Flag
+
+```
+tQKvmcwNYcFS6vmPHIUSI3ShmsrQZK8S
+
+```
+
+### Commands breakdown
+
+```bash
+git log .
+```
+This command allows us to see all commit logs for a git repository.
+
+```bash
+git checkout f08ee321c5f564b2da90789fac14b5ae2e55c56c
+```
+this command lets us "checkout" (like you would checkout something in a shop) a different commit, or version, of the repository.
