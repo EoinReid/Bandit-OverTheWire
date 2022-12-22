@@ -31,6 +31,8 @@ OverTheWire Bandit is a linux based Capture the Flag wargame designed for beginn
 - [Level 25 → Level 26](#level-25---level-26)
 - [Level 26 → Level 27](#level-26---level-27)
 - [Level 27 → Level 28](#level-27---level-28)
+- [Level 28 → Level 29](#level-28---level-29)
+- [Level 29 → Level 30](#level-29---level-30)
 
 # Level 0
 
@@ -1884,3 +1886,5 @@ AVanL161y9rsbcJIsFHuw35rjaOM19nR
 git clone ssh://bandit27-git@localhost:2220/home/bandit27-git/repo
 ```
 git clone allows you to copy the repository of given repo, in this instance we provided bandit27-git/repo path and made a copy of it to our current directory.
+
+
