@@ -1888,7 +1888,7 @@ git clone ssh://bandit27-git@localhost:2220/home/bandit27-git/repo
 git clone allows you to copy the repository of given repo, in this instance we provided bandit27-git/repo path and made a copy of it to our current directory.
 
 
-# Level 28  → Level 29
+# Level 28 → Level 29
 
 ### Level Goal
 
@@ -1988,7 +1988,7 @@ git checkout f08ee321c5f564b2da90789fac14b5ae2e55c56c
 ```
 this command lets us "checkout" (like you would checkout something in a shop) a different commit, or version, of the repository.
 
-# Level 29  → Level 230
+# Level 29 → Level 30
 
 ### Level Goal
 
