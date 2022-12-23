@@ -34,6 +34,7 @@ OverTheWire Bandit is a linux based Capture the Flag wargame designed for beginn
 - [Level 28 → Level 29](#level-28--level-29)
 - [Level 29 → Level 30](#level-29--level-30)
 - [Level 30 → Level 31](#level-30--level-31)
+- [Level 31 → Level 32](#level-31--level-32)
 
 # Level 0
 
@@ -2139,3 +2140,111 @@ Tags in git are usually used as a reference to specific points in a git reposito
 bandit30@bandit:/tmp/git-b30/repo$ git show secret
 ```
 git show is used to view expanded information and details about a git object, such as a tag in this case but can also be used with commits, trees and other git objects.
+
+# Level 31 → Level 32
+
+### Level Goal
+
+> TThere is a git repository at ssh://bandit31-git@localhost/home/bandit31-git/repo. The password for the user bandit31-git is the same as for the user bandit31.
+Clone the repository and find the password for the next level.
+
+### Walkthrough
+
+Similar to previous levels we are going to create a directory in /tmp to work from and change directories to it.
+```bash
+mkdir /tmp/git-b31
+cd /tmp/gitb31
+```
+
+Then we are going to clone the git repo from the level goal
+```bash
+git clone ssh://bandit31-git@localhost:2220/home/bandit31-git/rep
+```
+Then switch directories to repo and list the contents
+```bash
+cd repo
+ls -la
+```
+
+Are usual README.md there is there but also a .gitignore file that we haven't seen before.
+
+Lets check the contents of the readme file.
+```bash
+cat README.md
+```
+We can see from the file that our goal for this level is to push a file this time, called key.txt with the text "May I come in?" to the master branch.
+
+```bash
+bandit31@bandit:/tmp/git-b31/repo$ cat README.md 
+This time your task is to push a file to the remote repository.
+
+Details:
+    File name: key.txt
+    Content: 'May I come in?'
+    Branch: master
+
+```
+
+Lets create key.txt with the content.
+```bash
+echo "May I come in?" > key.txt
+```
+
+Next lets add key.txt to our git
+```bash
+git add key.txt
+```
+Uh oh, that .gitignore file is causing our key.txt file to be ignore.
+```bash
+The following paths are ignored by one of your .gitignore files:
+key.txt
+Use -f if you really want to add them.
+```
+lets see the contents of .gitignore
+```bash
+cat .gitignore
+```
+it ignores all .txt files!, lets edit it to change this and remove the "*.txt" line
+
+```bash
+nano .gitignore
+```
+Lets re-add our key.txt file
+```bash
+git add key.txt
+```
+
+Then lets create our git commit message
+```bash
+git commit -m "adds key.txt file"
+```
+And finally push to the master branch.
+```bash
+git push origin master
+```
+
+And we have our flag!
+
+### Flag
+
+```
+rmCBvG56y58BXzv98yZGdO7ATVL5dW8ynano 
+
+```
+
+### Commands breakdown
+
+```bash
+git add key.txt
+```
+this command allows us to add a file to be included in git. Just because the file was in the repo directory doesn't automatically mean it will be captured but git.
+
+```bash
+git commit -m "adds key.txt file"
+```
+The git commit command allows us to commit and comment on any changes we have made to the repo.
+
+```bash
+git push origin master
+```
+git push then allows us to "push" our changes and commits to the branch, in this case our master branch.
