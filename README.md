@@ -33,6 +33,7 @@ OverTheWire Bandit is a linux based Capture the Flag wargame designed for beginn
 - [Level 27 → Level 28](#level-27---level-28)
 - [Level 28 → Level 29](#level-28--level-29)
 - [Level 29 → Level 30](#level-29--level-30)
+- [Level 30 → Level 31](#level-30--level-31)
 
 # Level 0
 
@@ -2063,3 +2064,78 @@ xbhV3HpNGlTIdnjUrdAlPzc2L6y9EOnS
 
 ### Commands breakdown
 No new commands in this level
+
+# Level 30 → Level 31
+
+### Level Goal
+
+> There is a git repository at ssh://bandit30-git@localhost/home/bandit30-git/repo. The password for the user bandit30-git is the same as for the user bandit30.
+Clone the repository and find the password for the next level.
+
+### Walkthrough
+
+Similar to previous levels we are going to create a directory in /tmp to work from and change directories to it.
+```bash
+mkdir /tmp/git-b30
+cd /tmp/gitb30
+```
+Then we clone the git repo from the level goal
+```bash
+git clone ssh://bandit30-git@localhost:2220/home/bandit30-git/rep
+```
+then change directories to repo and list the contents of the directory
+```bash
+cd repo
+ls
+```
+Then lets read the contents of README.md
+```bash
+cat README.md
+```
+So it seems to be an empty file, lets check the commit history and look at branches to see if there is anything there we can use.
+```bash
+bandit30@bandit:/tmp/git-b30/repo$ cat README.md 
+just an epmty file... muahaha
+```
+
+```bash
+git branch -a
+```
+No other branches
+
+```bash
+git log .
+```
+No other commits
+
+One thing we haven't tried before is looking the the tags, these are usually used to keep track of important versions.
+
+```bash
+git tag
+```
+We can see that there is actually a tag called secret, not suspicious at all.. Lets see what its inside
+
+```bash
+bandit30@bandit:/tmp/git-b30/repo$ git show secret
+```
+
+And we have our flag!
+
+### Flag
+
+```
+OoffzGDlzhAlerFJ2cAiz1D41JW1Mhmt
+
+```
+
+### Commands breakdown
+
+```bash
+git tag
+```
+Tags in git are usually used as a reference to specific points in a git repositories history. It is usually used to mark important version releases.
+
+```bash
+bandit30@bandit:/tmp/git-b30/repo$ git show secret
+```
+git show is used to view expanded information and details about a git object, such as a tag in this case but can also be used with commits, trees and other git objects.
