@@ -1987,3 +1987,79 @@ This command allows us to see all commit logs for a git repository.
 git checkout f08ee321c5f564b2da90789fac14b5ae2e55c56c
 ```
 this command lets us "checkout" (like you would checkout something in a shop) a different commit, or version, of the repository.
+
+# Level 29  → Level 230
+
+### Level Goal
+
+> There is a git repository at ssh://bandit29-git@localhost/home/bandit29-git/repo. The password for the user bandit29-git is the same as for the user bandit29.
+Clone the repository and find the password for the next level.
+
+### Walkthrough
+
+Similar to previous levels lets create a directory in /tmp to work from and change directories to it.
+
+```bash
+mkdir /tmp/git-b29
+cd /tmp/gitb29
+```
+
+Then lets clone the git repo from the level goal
+
+```bash
+git clone ssh://bandit29-git@localhost:2220/home/bandit29-git/rep
+```
+
+And then we switch to the repo directory and look at the contents
+```bash
+cd repo
+ls
+```
+Next, lets read the output of the readme file.
+```bash
+cat README.md
+```
+We can see there i a username, but the readme tells us that there is no password saved "in production", which reads to me that the passwords might be saved in the read me in non-production or testing branches.
+
+```bash
+bandit29@bandit:/tmp/git29/repo$ cat README.md 
+
+# Bandit Notes
+Some notes for bandit30 of bandit.
+
+## credentials
+
+- username: bandit30
+- password: <no passwords in production!>
+```
+Lets take a look at the different branches of this repo.
+```bash
+git branch -r
+```
+We see a few different branches here, we are currently in origin/master, lets try switching to origin/dev to see if they left any credentials in their development branch.
+
+```bash
+bandit29@bandit:/tmp/git29/repo$ git branch -r
+  origin/HEAD -> origin/master
+  origin/dev
+  origin/master
+  origin/sploits-dev
+```
+
+Switch branches using git checkout then read the contents of the README.md for this branch.
+```bash
+git checkout origin/dev
+cat README.md
+```
+
+And the credentials are left there so we have our flag!
+
+### Flag
+
+```
+xbhV3HpNGlTIdnjUrdAlPzc2L6y9EOnS
+
+```
+
+### Commands breakdown
+No new commands in this level
