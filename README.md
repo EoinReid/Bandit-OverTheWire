@@ -2008,7 +2008,7 @@ cd /tmp/gitb29
 Then lets clone the git repo from the level goal
 
 ```bash
-git clone ssh://bandit29-git@localhost:2220/home/bandit29-git/rep
+git clone ssh://bandit29-git@localhost:2220/home/bandit29-git/repo
 ```
 
 And then we switch to the repo directory and look at the contents
@@ -2081,7 +2081,7 @@ cd /tmp/gitb30
 ```
 Then we clone the git repo from the level goal
 ```bash
-git clone ssh://bandit30-git@localhost:2220/home/bandit30-git/rep
+git clone ssh://bandit30-git@localhost:2220/home/bandit30-git/repo
 ```
 then change directories to repo and list the contents of the directory
 ```bash
