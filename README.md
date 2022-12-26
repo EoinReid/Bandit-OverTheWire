@@ -35,6 +35,7 @@ OverTheWire Bandit is a linux based Capture the Flag wargame designed for beginn
 - [Level 29 → Level 30](#level-29--level-30)
 - [Level 30 → Level 31](#level-30--level-31)
 - [Level 31 → Level 32](#level-31--level-32)
+- [Level 32 → Level 33](#level-32--level-33)
 
 # Level 0
 
@@ -2248,3 +2249,49 @@ The git commit command allows us to commit and comment on any changes we have ma
 git push origin master
 ```
 git push then allows us to "push" our changes and commits to the branch, in this case our master branch.
+
+# Level 32 → Level 33
+
+### Level Goal
+
+> After all this git stuff its time for another escape. Good luck!
+
+### Walkthrough
+
+So we log in and see that the shell doesn't seem to be our usual bash shell, lets try list the directory contents and see what happens.
+
+```bash
+ls
+```
+So it seems the shell is converting all our commands to uppercase causing them to be unrecognised.
+
+Lets try invoke our usual bash shell using the $0 process
+
+```bash
+$0
+```
+And we have escaped the uppercase shell! Lets try see whats in the directory.
+
+```bash
+ls -la
+```
+
+Nothing too interesting so lets try print the password from the usual location
+```bash
+cat /etc/bandit_pass/bandit33
+```
+
+And we have our flag!
+
+### Flag
+
+```
+odHo63fHiFqcWWJG9rLiLDtPm45KzUKy
+```
+
+### Commands breakdown
+
+```bash
+$0
+```
+
