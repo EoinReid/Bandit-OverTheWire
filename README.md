@@ -2228,7 +2228,7 @@ And we have our flag!
 ### Flag
 
 ```
-rmCBvG56y58BXzv98yZGdO7ATVL5dW8ynano 
+rmCBvG56y58BXzv98yZGdO7ATVL5dW8y 
 
 ```
 
